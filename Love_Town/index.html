@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Love Town Cafe</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Romantic Font -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    overflow:hidden;
+    height:100vh;
+    background:url("img.jpg") no-repeat center center fixed;
+    background-size:cover;
+}
+
+/* ===== soft baby pink overlay ===== */
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(255,192,203,0.35);
+    backdrop-filter: blur(2px);
+    z-index:0;
+}
+
+/* ===== Page 1 ===== */
+#inputPage{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:2;
+}
+
+/* glass card */
+.input-box{
+    background:rgba(255,255,255,0.18);
+    backdrop-filter: blur(12px);
+    border-radius:24px;
+    padding:40px 50px;
+    text-align:center;
+    box-shadow:0 15px 45px rgba(0,0,0,0.25);
+}
+
+.input-box h2{
+    margin-top:0;
+    color:#ffffff;
+}
+
+/* input */
+input{
+    padding:14px;
+    font-size:18px;
+    border-radius:12px;
+    border:none;
+    width:260px;
+    text-align:center;
+    margin-top:10px;
+    outline:none;
+}
+
+/* button */
+button{
+    margin-top:18px;
+    padding:12px 28px;
+    font-size:18px;
+    border:none;
+    border-radius:12px;
+    background:#ff4d6d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.25s;
+}
+
+button:hover{
+    background:#e63b5c;
+    transform:translateY(-1px);
+}
+
+/* ===== Display Page ===== */
+#displayPage{
+    display:none;
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    z-index:2;
+}
+
+/* Back Button */
+.back-btn{
+    position:absolute;
+    top:20px;
+    left:20px;
+    background:rgba(255,255,255,0.9);
+    color:#ff4d6d;
+    padding:10px 18px;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:bold;
+    z-index:5;
+}
+
+/* ===== SCROLLING NAME (MORE STYLISH) ===== */
+.marquee{
+    position:absolute;
+    white-space:nowrap;
+    font-size:120px;
+    font-family:'Great Vibes', cursive;
+	font-weight: bold;
+    color:#000;
+    letter-spacing:4px;
+    top:42%;
+    animation:scrollText 14s linear infinite;
+
+    /* premium glow */
+    text-shadow:
+        3px 3px 12px rgba(255,255,255,0.95),
+        0 0 30px rgba(255,105,180,0.6),
+        0 0 60px rgba(255,182,193,0.4);
+}
+
+@keyframes scrollText{
+    0%{ transform:translateX(100vw); }
+    100%{ transform:translateX(-100%); }
+}
+
+/* ===== Floating Hearts ===== */
+.heart{
+    position:absolute;
+    bottom:-50px;
+    font-size:24px;
+    animation:floatUp linear infinite;
+    opacity:0.85;
+    z-index:1;
+}
+
+@keyframes floatUp{
+    from{
+        transform:translateY(0) scale(1);
+        opacity:0.9;
+    }
+    to{
+        transform:translateY(-110vh) scale(1.5);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<!-- Page 1 -->
+<div id="inputPage">
+    <div class="input-box">
+        <h2>💖 Enter Name 💖</h2>
+        <input type="text" id="nameInput" placeholder="Enter name..."><br>
+        <button onclick="showName()">Submit</button>
+    </div>
+</div>
+
+<!-- Page 2 -->
+<div id="displayPage">
+    <button class="back-btn" onclick="goBack()">⬅ Back</button>
+    <div class="marquee" id="displayName"></div>
+</div>
+
+<script>
+function showName() {
+    const name = document.getElementById("nameInput").value.trim();
+    if (!name) {
+        alert("Please enter a name ❤️");
+        return;
+    }
+
+    document.getElementById("displayName").innerText = "❤️ " + name + " ❤️";
+    document.getElementById("inputPage").style.display = "none";
+    document.getElementById("displayPage").style.display = "block";
+}
+
+function goBack() {
+    document.getElementById("displayPage").style.display = "none";
+    document.getElementById("inputPage").style.display = "flex";
+}
+
+/* floating hearts */
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="💖";
+
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(4+Math.random()*6)+"s";
+    heart.style.fontSize=(20+Math.random()*30)+"px";
+
+    document.getElementById("displayPage").appendChild(heart);
+
+    setTimeout(()=>heart.remove(),10000);
+}
+setInterval(createHeart,500);
+</script>
+
+</body>
+</html>
